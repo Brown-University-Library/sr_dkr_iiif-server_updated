@@ -1,0 +1,24 @@
+services:
+  cantaloupe:
+    build: . # build from Dockerfile
+    container_name: cantaloupe
+    ports:
+      - "8182:8182"
+    volumes: 
+      - ./cantaloupe:/cantaloupe # Nginx below will re-route to port 80, but using here as 8182 is http default for cantaloupe
+    networks:
+      - backend
+  
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf # using volume for now, custom nginx.conf, short-term
+    networks:
+      - backend
+      
+networks:
+  backend:
