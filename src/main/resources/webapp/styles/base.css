@@ -1,0 +1,13 @@
+@import url(bootstrap.min.css);
+
+div.alert-info a {
+    color: white;
+    text-decoration: underline;
+}
+
+/* error page */
+
+body#cl-error p {
+    margin-bottom: 1.4em;
+    margin-top: 0em;
+}
