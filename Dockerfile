@@ -1,4 +1,4 @@
-FROM openjdk:21-bookworm
+FROM --platform=linux/amd64 openjdk:21-bookworm 
 
 ENV JAVA_HOME=/opt/jdk
 ENV PATH=$PATH:/opt/jdk/bin:/opt/maven/bin
