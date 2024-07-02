@@ -13,10 +13,10 @@ EXPOSE 8182
 
 WORKDIR /opt/cantaloupe
 
-RUN curl -L "https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.6/cantaloupe-5.0.6.zip" > /tmp/cantaloupe.zip \ 
+RUN curl -L "https://github.com/cantaloupe-project/cantaloupe/releases/download/v${CANTALOUPE_VERSION}/cantaloupe-${CANTALOUPE_VERSION}.zip" > /tmp/cantaloupe.zip \ 
         && unzip /tmp/cantaloupe.zip -d /opt/cantaloupe \
-        && cp /opt/cantaloupe/cantaloupe-5.0.6/cantaloupe-5.0.6.jar /opt/cantaloupe/cantaloupe.jar
-# COPY cantaloupe-5.0.6/cantaloupe-5.0.6.jar /opt/cantaloupe/cantaloupe.jar
+        && cp /opt/cantaloupe/cantaloupe-${CANTALOUPE_VERSION}/cantaloupe-${CANTALOUPE_VERSION}.jar /opt/cantaloupe/cantaloupe.jar
+# COPY cantaloupe-5.0.6/cantaloupe-${CANTALOUPE_VERSION}.jar /opt/cantaloupe/cantaloupe.jar
 
 
 # https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.6/cantaloupe-5.0.6.zip
@@ -40,6 +40,9 @@ RUN curl -L "https://github.com/cantaloupe-project/cantaloupe/releases/download/
 # * All the rest is needed by GrokProcessor
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
+    build-essential \
+    cmake \
+    git \
     dpkg \
     wget \
     unzip \
@@ -52,19 +55,26 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     grokj2k-tools \
     maven \
     libturbojpeg0 \
+    libopenjp2-7 \
     libopenjp2-tools \
         liblcms2-dev \
         libpng-dev \
         libzstd-dev \
         libtiff-dev \
+        libz-dev \
         libjpeg-dev \
         zlib1g-dev \
         libwebp-dev \
         libimage-exiftool-perl \
     && rm -rf /var/lib/apt/lists/*
 
-
-
+# openjpeg
+RUN git clone https://github.com/uclouvain/openjpeg.git \
+        && cd openjpeg \
+        && mkdir build \ 
+        && cd build \
+        && cmake .. -DCMAKE_BUILD_TYPE=Release \
+        && make
 
 
 # Install TurboJpegProcessor dependencies
