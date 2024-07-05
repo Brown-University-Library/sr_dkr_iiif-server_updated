@@ -1,4 +1,4 @@
-docker-compose using nginx.conf for sr iiif image server
+(use) sr iiif image server updates
 ===================================================================
 
 Tutorial
