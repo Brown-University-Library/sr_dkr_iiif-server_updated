@@ -1,7 +1,7 @@
 (use) sr iiif image server updates
 ===================================================================
 
-Tutorial
+Tutorial update tk
 ---------
 1) ensure docker desktop is running
 
