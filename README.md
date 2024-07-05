@@ -12,7 +12,7 @@ Tutorial
 (seems unncessary for testing, perhaps useful when serving to develop? see https://docs.docker.com/compose/compose-file/#external)
 
 4) let's get in the directory and run -detached (-d)<br/>
-```cd sr_dkr_iiif-server```<br/>
+```cd sr_dkr_iiif-server_updated```<br/>
 ```docker-compose up -d```<br/>
 
 6) open a browser and go to<br/>
