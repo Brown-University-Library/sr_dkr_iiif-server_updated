@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 openjdk:21-bookworm 
+FROM --platform=linux/amd64 eclipse-temurin:21-jdk
 
 ENV JAVA_HOME=/opt/jdk
 ENV PATH=$PATH:/opt/jdk/bin:/opt/maven/bin
@@ -69,12 +69,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # openjpeg
-RUN git clone https://github.com/uclouvain/openjpeg.git \
-        && cd openjpeg \
-        && mkdir build \ 
-        && cd build \
-        && cmake .. -DCMAKE_BUILD_TYPE=Release \
-        && make
+# RUN git clone https://github.com/uclouvain/openjpeg.git \
+#         && cd openjpeg \
+#         && mkdir build \ 
+#         && cd build \
+#         && cmake .. -DCMAKE_BUILD_TYPE=Release \
+#         && make
 
 
 # Install TurboJpegProcessor dependencies
@@ -91,6 +91,7 @@ COPY ./processors/kdu/* /usr/lib/
 # RUN sudo apt-get -f install
 # RUN wget http://ftp.us.debian.org/debian/pool/main/libg/libgrokj2k/grokj2k-tools_10.0.5-1+b2_amd64.deb
 # RUN sudo apt install grokj2k-tools_10.0.5-1+b2_amd64.deb
+# RUN sudo apt-get -f install
 
 # Install OpenJDK
 RUN wget -q https://github.com/AdoptOpenJDK/openjdk16-binaries/releases/download/jdk-16.0.1%2B9/OpenJDK16U-jdk_x64_linux_hotspot_16.0.1_9.tar.gz \

@@ -4,6 +4,7 @@ services:
     container_name: cantaloupe
     ports:
       - "8182:8182"
+      - "8183:8183"
     volumes: 
       - ./cantaloupe:/cantaloupe # Nginx below will re-route to port 80, but using here as 8182 is http default for cantaloupe
     networks:
