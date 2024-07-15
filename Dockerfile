@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 eclipse-temurin:21-jdk
+FROM --platform=linux/amd64 openjdk:21-bookworm
 
 ENV JAVA_HOME=/opt/jdk
 ENV PATH=$PATH:/opt/jdk/bin:/opt/maven/bin
