@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 openjdk:21-bookworm
+FROM --platform=linux/amd64 sapmachine:ubuntu-24.04
 
 ENV JAVA_HOME=/opt/jdk
 ENV PATH=$PATH:/opt/jdk/bin:/opt/maven/bin
@@ -12,6 +12,14 @@ ARG CANTALOUPE_SHA256="35311eb0d4d6f0578cab42fd5e51d6150e62821cb3b4ee3a265e2befb
 EXPOSE 8182
 
 WORKDIR /opt/cantaloupe
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    curl \
+    unzip \
+    ca-certificates \
+    gnupg \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN curl -L "https://github.com/cantaloupe-project/cantaloupe/releases/download/v${CANTALOUPE_VERSION}/cantaloupe-${CANTALOUPE_VERSION}.zip" > /tmp/cantaloupe.zip \ 
         && unzip /tmp/cantaloupe.zip -d /opt/cantaloupe \
@@ -54,7 +62,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgrokj2k1 \
     grokj2k-tools \
     maven \
-    libturbojpeg0 \
+    libturbojpeg \
     libopenjp2-7 \
     libopenjp2-tools \
         liblcms2-dev \
