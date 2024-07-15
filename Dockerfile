@@ -47,13 +47,10 @@ RUN curl -L "https://github.com/cantaloupe-project/cantaloupe/releases/download/
 # * libopenjp2-tools is needed by OpenJpegProcessor
 # * All the rest is needed by GrokProcessor
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates \
     build-essential \
     cmake \
     git \
     dpkg \
-    wget \
-    unzip \
     ffmpeg \
     nano \
     sudo \
@@ -103,15 +100,18 @@ COPY ./processors/kdu/* /usr/lib/
 
 # Install OpenJDK
 RUN wget -q https://github.com/AdoptOpenJDK/openjdk16-binaries/releases/download/jdk-16.0.1%2B9/OpenJDK16U-jdk_x64_linux_hotspot_16.0.1_9.tar.gz \
-        && tar xfz OpenJDK16U-jdk_x64_linux_hotspot_16.0.1_9.tar.gz \
-        && mv jdk-16.0.1+9 /opt/jdk \
+    && tar xfz OpenJDK16U-jdk_x64_linux_hotspot_16.0.1_9.tar.gz \
+    && mv jdk-16.0.1+9 /opt/jdk \
 # Install Maven (the one in apt is too old for JDK16 as of 2020-05-14)
-        && wget -q https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.6/apache-maven-3.9.6-bin.tar.gz  \
-        && tar xfz apache-maven-3.9.6-bin.tar.gz \
-        && mv apache-maven-3.9.6 /opt/maven \
-        && rm apache-maven-3.9.6-bin.tar.gz
+    && wget -q https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.8/apache-maven-3.9.8-bin.tar.gz  \
+    && tar xfz apache-maven-3.9.8-bin.tar.gz \
+    && mv apache-maven-3.9.8 /opt/maven \
+    && rm apache-maven-3.9.8-bin.tar.gz
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+#     openjdk-21-jdk \
+#     && rm -rf /var/lib/apt/lists/*
 
-# TURBOJPEG ADD APT REPO
+# ADD TURBOJPEG APT REPO
 RUN wget -q -O- https://packagecloud.io/dcommander/libjpeg-turbo/gpgkey | gpg --dearmor >/etc/apt/trusted.gpg.d/libjpeg-turbo.gpg \
         && wget -P /etc/apt/sources.list.d/ https://raw.githubusercontent.com/libjpeg-turbo/repo/main/libjpeg-turbo.list \
         && apt-get update
@@ -121,11 +121,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
      libjpeg-turbo-official \
      && rm -rf /var/lib/apt/lists/*
 
-# TURBOJPEG ALT
-# RUN wget https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.0.1/libjpeg-turbo-official_3.0.1_arm64.deb \
-# && dpkg -i ./libjpeg-turbo-official_3.0.1_arm64.deb \
-# RUN wget https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.0.1/libjpeg-turbo-official_3.0.1_amd64.deb \
-# && dpkg -i ./libjpeg-turbo-official_3.0.1_amd64.deb \
 
 # A non-root user is needed for some FilesystemSourceTest tests to work.
 # ARG user=cantaloupe
