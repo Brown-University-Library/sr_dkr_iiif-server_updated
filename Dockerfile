@@ -98,18 +98,16 @@ COPY ./processors/kdu/* /usr/lib/
 # RUN sudo apt install grokj2k-tools_10.0.5-1+b2_amd64.deb
 # RUN sudo apt-get -f install
 
-# Install OpenJDK
-RUN wget -q https://github.com/AdoptOpenJDK/openjdk16-binaries/releases/download/jdk-16.0.1%2B9/OpenJDK16U-jdk_x64_linux_hotspot_16.0.1_9.tar.gz \
-    && tar xfz OpenJDK16U-jdk_x64_linux_hotspot_16.0.1_9.tar.gz \
-    && mv jdk-16.0.1+9 /opt/jdk \
-# Install Maven (the one in apt is too old for JDK16 as of 2020-05-14)
+# Install OPENJDK
+RUN wget -q https://download.java.net/java/GA/jdk22.0.2/c9ecb94cd31b495da20a27d4581645e8/9/GPL/openjdk-22.0.2_linux-x64_bin.tar.gz \
+    && tar xfz openjdk-22.0.2_linux-x64_bin.tar.gz \
+    && mv jdk-22.0.2 /opt/jdk \
+# INSTALL MAVEN    
     && wget -q https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.8/apache-maven-3.9.8-bin.tar.gz  \
     && tar xfz apache-maven-3.9.8-bin.tar.gz \
     && mv apache-maven-3.9.8 /opt/maven \
     && rm apache-maven-3.9.8-bin.tar.gz
-# RUN apt-get update && apt-get install -y --no-install-recommends \
-#     openjdk-21-jdk \
-#     && rm -rf /var/lib/apt/lists/*
+
 
 # ADD TURBOJPEG APT REPO
 RUN wget -q -O- https://packagecloud.io/dcommander/libjpeg-turbo/gpgkey | gpg --dearmor >/etc/apt/trusted.gpg.d/libjpeg-turbo.gpg \
