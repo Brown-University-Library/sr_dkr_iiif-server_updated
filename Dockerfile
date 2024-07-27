@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 sapmachine:ubuntu-24.04
+FROM sapmachine:ubuntu-24.04
 
 ENV JAVA_HOME=/opt/jdk
 ENV PATH=$PATH:/opt/jdk/bin:/opt/maven/bin
